@@ -39,7 +39,7 @@
     "dataSource": "db",
     "public": true
   },
-  "image-attachment": {
+  "attachment": {
     "dataSource": "storage",
     "public": true
   }

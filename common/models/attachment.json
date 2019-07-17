@@ -1,5 +1,5 @@
 {
-  "name": "image-attachment",
+  "name": "attachment",
   "base": "Model",
   "idInjection": true,
   "options": {

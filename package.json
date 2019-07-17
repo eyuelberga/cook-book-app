@@ -16,6 +16,7 @@
     "vue-build": "cd client && vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "helmet": "^3.10.0",
@@ -24,10 +25,12 @@
     "loopback-component-explorer": "^6.2.0",
     "loopback-component-storage": "^3.6.2",
     "loopback-ds-timestamp-mixin": "^3.4.1",
+    "material-design-icons-iconfont": "^5.0.1",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.7"
+    "vue-router": "^3.0.7",
+    "vuetify": "^1.5.16"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.9.2",

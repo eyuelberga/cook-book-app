@@ -9,6 +9,7 @@
     "name": "storage",
     "connector": "loopback-component-storage",
     "provider": "filesystem",
-    "root": "data/uploads"
+    "root": "data/uploads",
+    "nameConflict": "makeUnique"
   }
 }

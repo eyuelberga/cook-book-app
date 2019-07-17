@@ -6,6 +6,9 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -24,25 +27,47 @@
     "difficulty": {
       "type": "number"
     },
-    "username": {
-      "type": "string"
-    },
     "imageUrl": {
       "type": "string"
     }
   },
   "validations": [],
-  "relations": {},
-    "mixins": {
-      "TimeStamp" : true
-    },
+  "relations": {
+    "creator": {
+      "type": "belongsTo",
+      "model": "AppUser",
+      "foreignKey": "ownerId"
+    }
+  },
   "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$everyone",
+      "principalId": "$authenticated",
       "permission": "ALLOW",
-      "property": "find"
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": [
+        "updateAttributes",
+        "deleteById"
+      ]
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

@@ -14,10 +14,11 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
+  "AppUser": {
+    "dataSource": "db",
+    "public": true
   },
-  "AccessToken": {
+  "AppToken": {
     "dataSource": "db",
     "public": false
   },

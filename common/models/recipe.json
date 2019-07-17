@@ -1,0 +1,49 @@
+{
+  "name": "recipe",
+  "plural": "recipes",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "steps": {
+      "type": [
+        "string"
+      ]
+    },
+    "ingredients": {
+      "type": [
+        "object"
+      ]
+    },
+    "difficulty": {
+      "type": "number"
+    },
+    "username": {
+      "type": "string"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    }
+  ],
+  "methods": {}
+}

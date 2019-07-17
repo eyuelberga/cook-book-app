@@ -36,11 +36,11 @@
     "dataSource": "db",
     "public": false
   },
-  "recipe": {
+  "Recipe": {
     "dataSource": "db",
     "public": true
   },
-  "attachment": {
+  "Attachment": {
     "dataSource": "storage",
     "public": true
   }

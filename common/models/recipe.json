@@ -1,6 +1,6 @@
 {
-  "name": "recipe",
-  "plural": "recipes",
+  "name": "Recipe",
+  "plural": "Recipes",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

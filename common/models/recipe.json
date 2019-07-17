@@ -29,13 +29,13 @@
     },
     "imageUrl": {
       "type": "string"
-    },
-    "createdAt": {
-      "type": "date"
     }
   },
   "validations": [],
   "relations": {},
+    "mixins": {
+      "TimeStamp" : true
+    },
   "acls": [
     {
       "accessType": "EXECUTE",

@@ -2,10 +2,10 @@
 
   <v-dialog max-width="600px" v-model="dialog">
 
-    <v-btn flat slot="activator" class="success">Add new project</v-btn>
+    <v-btn flat slot="activator" class="success">Add new Recipe</v-btn>
     <v-card>
       <v-card-title>
-        <h2>Add a New Project</h2>
+        <h2>Add new Recipe</h2>
       </v-card-title>
 
       <v-card-text>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-
+import { EventBus } from '@/event-bus.js';
 
 export default {
 
@@ -53,12 +53,17 @@ export default {
       loading: false,
     }
   },
+  mounted() {
+    // EventBus.$on('dialog', (value) => {
+    //     this.dialog = true
+    //   })
+    EventBus.$on('a', function (payLoad) {
+      console.log("ffdfd")
+    });
+    },
   methods: {
     
     submit() {
-
-
-
     },
 
     formReset() {

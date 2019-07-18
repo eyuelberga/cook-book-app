@@ -7,7 +7,6 @@
       <span>{{snackbarText}}</span>
       <v-btn flat color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-
        <v-snackbar v-model="snackbar_success" :timeout="4000" top color="success">
       <span>{{snackbar_successText}}</span>
       <v-btn flat color="white" @click="snackbar_success = false">Close</v-btn>
@@ -115,6 +114,7 @@ export default {
     this.loading = true;
     axios.post('http://localhost:3000/api/AppUsers/login/',this.authBody)
          .then(res =>{
+          localStorage.setItem('access_token',response.id);
          this.$router.replace({path:'/home'})
          this.loading = false;
          })
@@ -122,6 +122,7 @@ export default {
         this.snackbarText = 'Error occured Try again!';
          this.snackbar = true;
          this.loading = false;
+          this.authBody.username = '';
          this.authBody.password = '';
 
          });
@@ -129,8 +130,6 @@ export default {
 }
 }
 </script>
-
-
 <style>
 
   @media only screen and (max-width: 768px) {

@@ -156,8 +156,13 @@ v-for="(s,index) in s_list" :key="s"
 
         <v-btn
           color="primary" @click="saveRecipe"
-        :loading="loading">
+        :loading="loading" v-if="!editMode">
           Save Recipe
+        </v-btn>
+        <v-btn
+          color="primary" @click="confirmEdit"
+        :loading="loading" v-if="editMode">
+          Update Recipe
         </v-btn>
       </v-stepper-content>
     </v-stepper-items>
@@ -297,6 +302,7 @@ import { Promise } from 'q';
         edit_step_dialog: false,
         dialog3: false,
         index_to_update:null,
+        index_to_update_main:null,
         e1: 0,
         name: '',
         imageName: '',
@@ -427,6 +433,11 @@ import { Promise } from 'q';
                         console.log(err);
                       })
                });
+             }else{
+               this.resetValues();
+               this.getAllRecipesByUser();
+               this.dialog = false;
+               this.loading = false;
              }
            })
            .catch(err=>{
@@ -500,7 +511,66 @@ import { Promise } from 'q';
 
     },
     editRecipe(index){
+       axios.get('http://localhost:3000/api/Recipes/'+index+'?access_token='+localStorage.getItem('access_token'))
+           .then(res=>{
+              this.el = 1;
+              this.i_list= res.data.ingredients;
+              this.s_list= res.data.steps;
+              this.imageUrl = res.data.imageUrl;
+              this.name = res.data.name;
+              this.dialog = true;
+              this.editMode = true;
+              this.index_to_update_main = index;
+           })
+           .catch(err=>{
+             console.log(err);
+           });
 
+    },
+    confirmEdit(){
+       this.loading = true
+      // step 1 save the recipe data without the image
+      axios.patch('http://localhost:3000/api/Recipes/'+this.index_to_update_main+'?access_token='+localStorage.getItem('access_token'),
+      {
+        name: this.name,
+        steps: this.s_list,
+        ingredients:this.i_list
+      })
+           .then(res=>{
+             let id = res.data.id;
+             // step 2 upload the image and get the uploaded file name
+             if(this.imageFile !==''){
+               this.uploadImage().then(result=>{
+                 // step 3 update recipe with the uploaded image
+                 console.log(result);
+                  axios.patch('http://localhost:3000/api/Recipes/'+this.index_to_update_main+'?access_token='+localStorage.getItem('access_token'),{
+                    imageUrl:'http://localhost:3000/api/Attachments/images/download/'+result
+                      })
+                      .then(res=>{
+                        this.loading = false;
+                        this.resetValues();
+                        this.getAllRecipesByUser();
+                        this.index_to_update_main = null;
+                        this.dialog = false;
+
+                      })
+                      .catch(err=>{
+                        this.loading = false
+                        console.log(err);
+                      })
+               });
+             }else{
+               this.resetValues();
+               this.getAllRecipesByUser();
+               this.dialog = false;
+               this.loading = false;
+             }
+           })
+           .catch(err=>{
+             this.loading = false
+             console.log(err);
+           });
+      
     },
     goToDetails(index){
       console.log(index)

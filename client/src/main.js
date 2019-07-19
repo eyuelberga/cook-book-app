@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import Vuetify from 'vuetify'
 import Navbar from './components/Navbar'
-import Popup from './components/Popup'
+import Details from './components/Details'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
@@ -14,7 +14,7 @@ new Vue({
   router,
   components: {
     Navbar,
-    Popup
+    Details
   },
   render: h => h(App)
 }).$mount('#app')

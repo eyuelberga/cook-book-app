@@ -2,6 +2,7 @@
   <v-app class="grey lighten-4">
     
     <Navbar v-if="show"/>
+    <Details v-if="show"/>
 
     <v-content class="mb-4" v-if="show">
       <router-view></router-view>
@@ -16,11 +17,10 @@
 
 <script>
 import Navbar from '@/components/Navbar'
-
-
+import Details from '@/components/Details'
 export default {
   name: 'App',
-  components: { Navbar },
+  components: { Navbar, Details},
 
   data () {
     return {

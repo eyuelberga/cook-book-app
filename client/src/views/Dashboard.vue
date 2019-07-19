@@ -5,7 +5,7 @@
     <h1 class="subheading grey--text ml-4">Dashboard</h1>
 
      <v-dialog fullscreen hide-overlay transition="dialog-bottom-transition" v-model="dialog">
-    <v-card>
+    <v-card flat>
 
       <v-toolbar dark color="primary">
           <v-btn icon dark @click="dialog = false">
@@ -19,36 +19,40 @@
         </v-toolbar>
         <v-stepper v-model="e1">
     <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Title for the recipe</v-stepper-step>
+      <v-stepper-step :complete="e1 > 1" editable step="1">Title for the recipe</v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 2" step="2">What are the ingredients? </v-stepper-step>
+      <v-stepper-step :complete="e1 > 2" editable step="2">What are the ingredients? </v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="3">The steps</v-stepper-step>
+      <v-stepper-step :complete="e1 > 3" editable step="3">The steps</v-stepper-step>
        <v-divider></v-divider>
 
-      <v-stepper-step step="4">Add an image</v-stepper-step>
+      <v-stepper-step editable step="4">Add an image</v-stepper-step>
     </v-stepper-header>
 
     <v-stepper-items>
-      <v-stepper-content step="1">
+      <v-stepper-content  step="1">
+         <v-layout align-end justify-center row fill-height>
         <v-card flat
          class="mb-5"
-         height="200px">
-         <v-layout row justify-center>
-         <form>
-           <v-text-field
+         min-height="400px"  width="500px">
+        
+         <div>
+         <form >
+           <v-text-field  
       v-model="name"
       :rules="nameRules"
       label="Name"
       required
     ></v-text-field>
          </form>
-         </v-layout>
+         </div>
+         
         </v-card>
+        </v-layout>
         <v-btn
           color="primary"
           @click="e1 = 2"
@@ -60,8 +64,9 @@
       <v-stepper-content step="2">
         <v-card flat 
         class="mb-5"
+         min-height="400px"
          >
-         <v-btn flat color="primary" dark @click="dialog2 = !dialog2"><v-icon medium color="primary">add_circle</v-icon></v-btn>
+         <v-btn flat icon color="primary" dark @click="dialog2 = !dialog2"><v-icon large color="orange">add_circle</v-icon></v-btn>
   <v-layout row justify-center>
 
       <draggable
@@ -70,19 +75,20 @@
     >
       <transition-group name="list-complete">
         
-        <v-card class ="cards-list cyan lighten-4" min-width="600px" max-height="145px"
+        <v-card class ="cards-list  blue-grey lighten-4" min-width="600px" max-height="90px"
 v-for="(i,index) in i_list" :key="i.name"
           @dragend="log('a')" > 
+          <v-layout align-center justify-space-between row fill-height>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">{{i.name}}</h3>
-            <div> {{ i.ammount }} </div>
+            <h3 class="title mb-0">{{i.name}}</h3>
+            <p class="brown--text">{{ i.ammount }} </p>
           </div>
         </v-card-title>
-        <v-card-actions>
-          <v-btn flat @click="i_edit(index)"  color="blue">Edit</v-btn>
-          <v-btn flat  @click="i_delete(index)" color="red">Delete</v-btn>
-        </v-card-actions>
+        <v-spacer></v-spacer>
+         <v-btn flat icon @click="i_edit(index)"  color="green"><v-icon>edit</v-icon></v-btn>
+          <v-btn flat  icon @click="i_delete(index)" color="red"><v-icon>delete</v-icon></v-btn>
+          </v-layout>
       </v-card>
     
       </transition-group>
@@ -101,8 +107,9 @@ v-for="(i,index) in i_list" :key="i.name"
       <v-stepper-content step="3">
         <v-card flat 
         class="mb-5"
+         min-height="400px"
          >
-         <v-btn flat color="primary" dark @click="add_step_dialog = !add_step_dialog"><v-icon medium color="primary">add_circle</v-icon></v-btn>
+         <v-btn flat color="primary"  icon dark @click="add_step_dialog = !add_step_dialog"><v-icon large color="orange">add_circle</v-icon></v-btn>
   <v-layout row justify-center>
       <draggable
       v-model="s_list"
@@ -110,18 +117,15 @@ v-for="(i,index) in i_list" :key="i.name"
     >
       <transition-group name="list-complete">
         
-        <v-card class ="cards-list cyan lighten-4" min-width="600px" max-height="115px"
+        <v-card class ="cards-list blue-grey lighten-4" min-width="600px" max-height="80px"
 v-for="(s,index) in s_list" :key="s"
           @dragend="log('a')" > 
-        <v-card-title primary-title>
-          <div>
-            <h4 class="headline mb-0">{{index+1}}. {{s}}</h4>
-          </div>
-        </v-card-title>
-        <v-card-actions>
-          <v-btn flat @click="s_edit(index)"  color="blue">Edit</v-btn>
-          <v-btn flat  @click="s_delete(index)" color="red">Delete</v-btn>
-        </v-card-actions>
+          <v-layout align-center justify-space-between row fill-height>
+<v-card-text><h4 class="subheading mb-0">{{index+1}}. {{s}}</h4></v-card-text>
+<v-spacer></v-spacer> 
+<v-btn flat @click="s_edit(index)"   icon color="green"><v-icon>edit</v-icon></v-btn>
+          <v-btn flat  @click="s_delete(index)"  icon color="red"><v-icon>delete</v-icon></v-btn>
+            </v-layout>
       </v-card>
     
       </transition-group>
@@ -140,15 +144,19 @@ v-for="(s,index) in s_list" :key="s"
       <v-stepper-content step="4">
         <v-card flat 
         class="mb-5"
+         min-height="400px"
          >
-  <v-layout row justify-center>
+  <v-layout column justify-center>
+    <v-text-field label="Select Image" v-model="imageName" prepend-icon="attach_file" @click="pickFile"></v-text-field>
+    <v-img :src="imageUrl" contain height="350px" width="350px" v-if="imageUrl"></v-img>
 			
+      <input type="file" style="display:none" ref="image" accept="image/*" @change="onFilePicked"/>
     </v-layout>
          </v-card>
 
         <v-btn
-          color="primary"
-        >
+          color="primary" @click="saveRecipe"
+        :loading="loading">
           Save Recipe
         </v-btn>
       </v-stepper-content>
@@ -223,79 +231,46 @@ v-for="(s,index) in s_list" :key="s"
         <v-form class="px-3" ref="form">
           <v-text-field label="Step" v-model="s_step" prepend-icon="edit"></v-text-field>
           <v-spacer></v-spacer>
-
           <v-btn flat class="success mx-0 mt-3" @click="updateSList" :loading="loading">Update</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
     </v-dialog>
-
-
-    <v-snackbar v-model="snackbar" top color="warning" flat>
+    <v-snackbar v-model="snackbar" top color="red" flat>
           <span>Are you sure?</span>
-          <v-btn flat color="white" @click="snackbar = false; deleteProject()">Yes</v-btn>
+          <v-btn flat color="white" @click="deleteConfirm">Yes</v-btn>
           <v-btn flat color="white" @click="snackbar = false; ">No</v-btn>
     </v-snackbar>
 
-    <v-container class="my-2">
+    <v-container>
 
       <v-layout row class="mb-3" wrap>
          <v-btn icon @click="openDialog()">
-          <v-icon   color="primary">add_circle</v-icon>
+          <v-icon   x-large color="orange">add_circle</v-icon>
         </v-btn>
       </v-layout>
 
-      <v-layout row justify-center v-if="this.projects.length == 0">
-        <v-layout column align-center>
-          <span :class="{'grey--text display-1': $vuetify.breakpoint.smAndUp, 'display-2 grey--text': $vuetify.breakpoint.xsOnly}">Nothing here 😔</span>
-          <v-btn flat color="primary" class="display-1" @click="openDialog"> <v-icon  color="primary">add_circle</v-icon></v-btn>
-        </v-layout>
-      </v-layout>
+       <v-layout>
+    <v-flex xs12 sm6 offset-sm3 v-if="allRecipesByUser != undefined || allRecipesByUser !== null || allRecipesByUser !== []">
+      <v-card   class="cards-list" v-for="recipe in allRecipesByUser" :key="recipe.id" >
+        <v-img
+          :src="recipe.imageUrl"
+          aspect-ratio="4"
+        ></v-img>
 
-      <draggable v-model="projects" @change="saveOrder" handle=".handle" :disabled="!todos" v-if="this.projects.length > 0">
-      <v-card flat v-for="(project, index) in projects" :key="project.title">
-
-        <v-layout row wrap :class="`pa-2 project ${project.status}`">
-  
-          <v-flex xs12 md6>
-            <div class="caption grey--text ml-3" v-if="todos">Project Title</div>
-            <div class="caption grey--text" v-if="!todos">Project Title</div>
-            <div :class="{'mt-0 mb-1': $vuetify.breakpoint.smAndDown}" v-if="!editMode || index != indexToEdit">
-              <v-icon size="20" class="handle" v-if="todos">drag_indicator</v-icon>
-              {{ project.title }}
-            </div>
-
-            <v-form @submit.prevent="updateTitle(index)">
-            <v-text-field autofocus :color="`${project.status}s`" v-model="newTitle" v-if="editMode && indexToEdit == index" class="ma-0 pa-0"></v-text-field>
-            </v-form>
-
-          </v-flex>
-
-          <v-flex xs5 sm6 md2>
-            <div class="caption grey--text">Due by</div>
-            <div :class="{'mt-0 mx-0 px-0': $vuetify.breakpoint.smAndDown}">{{ project.due }}</div>
-          </v-flex>
-
-          <v-flex xs3 sm3 md2 class="pt-0">
-            <div class="mt-0 pt-0">
-              <v-btn @click="changeStatus(index)" flat small round :class="`${project.status} white--text px-0 mx-0`">
-                {{ project.status }}
-              </v-btn>
-            </div>
-          </v-flex>
-          <v-spacer></v-spacer>
-
-          <v-flex xs3 sm3 md2>
-            <div class="mt-0 pt-0">
-              <v-btn icon :class="`${project.status}`" @click="editMode = !editMode; indexToEdit = index; newTitle = project.title;" class="pa-0 ma-0"><v-icon>edit</v-icon></v-btn>
-              <v-btn icon :class="`${project.status}`" @click="snackbar = true; indexToEdit = index;" class="pa-0 ma-0"><v-icon>delete</v-icon></v-btn>
-            </div>
-
-          </v-flex>
-        </v-layout>
-        <v-divider></v-divider>
+        <v-card-title primary-title>
+            <v-layout align-center justify-space-between row fill-height>
+            <h3 class="title mb-0">{{recipe.name}}</h3>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon flat color="orange" @click="goToDetails(recipe.id)"><v-icon>detail</v-icon></v-btn>
+              <v-btn icon flat color="green" @click="editRecipe(recipe.id)"><v-icon>edit</v-icon></v-btn>
+          <v-btn icon flat color="red" @click="deleteRecipe(recipe.id)" ><v-icon>delete</v-icon></v-btn></div>
+          </v-layout>
+        </v-card-title>
       </v-card>
-      </draggable>
+    </v-flex>
+  </v-layout>
       
     </v-container>
 
@@ -304,8 +279,10 @@ v-for="(s,index) in s_list" :key="s"
 </template>
 
 <script>
-  import draggable from 'vuedraggable';
+import draggable from 'vuedraggable';
 import { EventBus } from '@/event-bus.js';
+import axios from'axios';
+import { Promise } from 'q';
 
   export default {
      components: {
@@ -313,6 +290,7 @@ import { EventBus } from '@/event-bus.js';
     },
     data() {
       return {
+        allRecipesByUser:[],
         dialog: false,
         dialog2: false,
         add_step_dialog: false,
@@ -332,8 +310,6 @@ import { EventBus } from '@/event-bus.js';
         s_step: '',
         i_name: '',
         i_ammount: '',
-        projects: [],
-        projectsCopy: [],
         loading: false,
         userId: '',
         btnColor: '',
@@ -344,9 +320,7 @@ import { EventBus } from '@/event-bus.js';
       }
     },
     mounted() {
-      EventBus.$on('project-added', () => {
-       
-      });
+      this.getAllRecipesByUser()
     },
      methods: {
       openDialog() {
@@ -374,6 +348,7 @@ import { EventBus } from '@/event-bus.js';
         this.i_name = '';
         this.i_ammount = '';
         this.index_to_update = null;
+        this.index_to_delete = null;
       },
       updateSList() {
         this.s_list[this.index_to_update] = this.s_step;
@@ -397,9 +372,8 @@ import { EventBus } from '@/event-bus.js';
         this.s_step= this.s_list[index];
         this.edit_step_dialog = true;
         this.index_to_update = index;
-      }
-  },
-   pickFile () {
+      },
+         pickFile () {
             this.$refs.image.click ()
         },
 		
@@ -421,7 +395,119 @@ import { EventBus } from '@/event-bus.js';
 				this.imageFile = ''
 				this.imageUrl = ''
 			}
-		}
+    },
+    saveRecipe(){
+      this.loading = true
+      // step 1 save the recipe data without the image
+      axios.post('http://localhost:3000/api/Recipes?access_token='+localStorage.getItem('access_token'),
+      {
+        name: this.name,
+        steps: this.s_list,
+        ingredients:this.i_list
+      })
+           .then(res=>{
+             let id = res.data.id;
+             // step 2 upload the image and get the uploaded file name
+             if(this.imageFile !==''){
+               this.uploadImage().then(result=>{
+                 // step 3 update recipe with the uploaded image
+                 console.log(result);
+                  axios.patch('http://localhost:3000/api/Recipes/'+id+'?access_token='+localStorage.getItem('access_token'),{
+                    imageUrl:'http://localhost:3000/api/Attachments/images/download/'+result
+                      })
+                      .then(res=>{
+                        this.loading = false;
+                        this.resetValues();
+                        this.getAllRecipesByUser();
+                        this.dialog = false;
+
+                      })
+                      .catch(err=>{
+                        this.loading = false
+                        console.log(err);
+                      })
+               });
+             }
+           })
+           .catch(err=>{
+             this.loading = false
+             console.log(err);
+           });
+      
+     
+
+    },
+    async uploadImage(){
+      console.log(this.imageFile);
+      let formData = new FormData();
+      formData.append('image',this.imageFile)
+      return axios.post('http://localhost:3000/api/Attachments/images/upload?access_token='+localStorage.getItem('access_token'),formData,
+        {
+          headers:{
+                  'Content-Type':'multipart/form-data'
+                  }
+        })
+        .then(res=>{
+          //console.log(res);
+          return res.data.result.files.image[0].name;
+        })
+        .catch(err=>{
+          console.log(err);
+        });
+    },
+    resetValues(){
+      this.el = 1;
+      this.i_list= [];
+      this.s_list= [];
+      this.s_step= '';
+      this.i_name= '';
+      this.i_ammount= '';
+      this.imageName = ''
+			this.imageFile = ''
+      this.imageUrl = ''
+      this.name = ''
+    },
+    getAllRecipesByUser(){
+      axios.get('http://localhost:3000/api/Recipes/?access_token='+localStorage.getItem('access_token'),{where:{ownerId:localStorage.getItem('user_id')}})
+           .then(res=>{
+             let arr = [];
+             arr = res.data;
+             this.allRecipesByUser = arr.reverse();
+           })
+           .catch(err=>{
+             console.log(err);
+           });
+
+    },
+    deleteRecipe(index){
+      this.snackbar = true;
+      this.index_to_delete = index;
+
+    },
+    deleteConfirm(){
+      console.log(this.index_to_delete);
+       axios.delete('http://localhost:3000/api/Recipes/'+this.index_to_delete+'?access_token='+localStorage.getItem('access_token'),{})
+           .then(res=>{
+             this.snackbar = false;
+             console.log(this.index_to_delete);
+             this.index_to_delete = null;
+             console.log(res);
+             this.getAllRecipesByUser();
+           })
+           .catch(err=>{
+             console.log(err);
+           });
+
+    },
+    editRecipe(index){
+
+    },
+    goToDetails(index){
+      console.log(index)
+      EventBus.$emit('details',index);
+
+    }
+  }
   }
 </script>
 

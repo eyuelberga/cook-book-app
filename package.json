@@ -24,6 +24,7 @@
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.2.0",
     "loopback-component-storage": "^3.6.2",
+    "loopback-connector-mongodb": "^5.0.0",
     "loopback-ds-timestamp-mixin": "^3.4.1",
     "material-design-icons-iconfont": "^5.0.1",
     "serve-favicon": "^2.0.1",

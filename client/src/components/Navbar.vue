@@ -1,24 +1,14 @@
 <template>
-
   <nav>
-
-    <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
-      <span>Wow! You added a new project.</span>
-      <v-btn flat color="white" @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
-
     <v-toolbar flat app>
 
       <v-toolbar-side-icon class="grey--text" @click="drawer = !drawer"></v-toolbar-side-icon>
 
       <v-toolbar-title class="text-uppercase grey--text">
-        <span class="font-weight-light">Todo</span>
-        <span>Dev</span>
+        <span>My Cook Book</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      
-
       <v-btn flat color="grey" @click="signout">
         <span>Sign out</span>
         <v-icon right>exit_to_app</v-icon>
@@ -32,15 +22,9 @@
 
       <v-layout column align-center>
         <v-flex class="mt-5 text-xs-center">
-          <v-avatar size="130">
-            <img :src="photoURL">
-          </v-avatar>
           <p class="white--text subheading mt-1 text-xs-center">
             {{name}}
           </p>
-        </v-flex>
-        <v-flex class="mt-3 mb-3">
-          <Popup @projectAdded="snackbar=true" />
         </v-flex>
       </v-layout>
 
@@ -65,9 +49,9 @@
 
 
 <script>
-import Popup from './Popup'
+import axios from'axios';
+import { EventBus } from '@/event-bus.js';
 export default {
-  components: { Popup },
   data() {
     return {
       name: '',
@@ -75,19 +59,28 @@ export default {
       drawer: false,
       links: [
         { icon: 'dashboard', text: 'Dashboard', route: '/dashboard'},
-        { icon: 'settings', text: 'Settings', route: '/settings'},
       ],  
       snackbar: false,
     }
+  },
+  mounted(){
   },
   methods: {
 
     signout() {
       //TODO handle signout
+        axios.post('http://localhost:3000/api/AppUsers/logout?access_token='+localStorage.getItem('access_token'),{})
+         .then(res =>{
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('user_id');
+          this.$router.replace({path:'/auth'})
+         })
+         .catch(err =>{
+        console.log(err);
+         });
     }
 
   },
-
   created() {
     //TODO display current logged in user name 
   }

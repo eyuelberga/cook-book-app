@@ -78,6 +78,8 @@ export default {
       ],
       snackbar: false,
       snackbarText: '',
+      snackbar_success: false,
+      snackbar_successText: '',
     }
   },
 
@@ -114,12 +116,15 @@ export default {
     this.loading = true;
     axios.post('http://localhost:3000/api/AppUsers/login/',this.authBody)
          .then(res =>{
-          localStorage.setItem('access_token',response.id);
-         this.$router.replace({path:'/home'})
+          localStorage.setItem('access_token',res.data.id);
+          localStorage.setItem('user_id',res.data.userId);
+          console.log( localStorage.getItem('access_token'));
+         this.$router.replace({path:'/dashboard'})
          this.loading = false;
          })
          .catch(err =>{
         this.snackbarText = 'Error occured Try again!';
+        console.log(err);
          this.snackbar = true;
          this.loading = false;
           this.authBody.username = '';

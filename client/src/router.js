@@ -14,36 +14,40 @@ const router =  new Router({
       redirect: '/auth'
     },
     {
+      path: '*',
+      redirect: '/auth'
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: Auth
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
       meta: {
         requiresAuth: true
       }
-    },
-    {
-      path: '/auth',
-      name: 'auth',
-      component: Auth
     }
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not, redirect to login page.
-//   //   if (!) {
-//   //     next({
-//   //       path: '/login',
-//   //       query: { redirect: to.fullPath }
-//   //     })
-//   //   } else {
-//   //     next()
-//   //   }
-//   // } else {
-//   next() // make sure to always call next()!
-//    }
-// });
+router.beforeEach((to, from, next) => {
+  console.log(localStorage.getItem('access_token'));
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (!localStorage.getItem('access_token')) {
+    next({
+      path: '/auth',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
+else{
+  next() 
+}
+});
 
 export default router;

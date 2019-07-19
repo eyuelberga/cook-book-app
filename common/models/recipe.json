@@ -59,9 +59,16 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": [
-        "updateAttributes",
+        "updateAttributes","upsert",
         "deleteById"
       ]
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "*"
     },
     {
       "accessType": "READ",

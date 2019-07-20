@@ -18,7 +18,7 @@
           :src="data.imageUrl"
           aspect-ratio="1.75"
         ></v-img>
-        <v-card-title primary class="title">{{data.name}}</v-card-title>
+        <v-card-title primary class="headline">{{data.name}}</v-card-title>
         </v-card>
       </v-flex>
       <v-flex d-flex xs12 sm6 md8>

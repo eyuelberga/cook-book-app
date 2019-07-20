@@ -117,7 +117,7 @@ v-for="(i,index) in i_list" :key="i.name"
     >
       <transition-group name="list-complete">
         
-        <v-card class ="cards-list blue-grey lighten-4" min-width="600px" max-height="80px"
+        <v-card class ="cards-list blue-grey lighten-4" min-width="600px" min-height="80px"
 v-for="(s,index) in s_list" :key="s"
           @dragend="log('a')" > 
           <v-layout align-center justify-space-between row fill-height>

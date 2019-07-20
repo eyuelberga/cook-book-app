@@ -2,12 +2,11 @@
   <v-app class="grey lighten-4">
     
     <Navbar v-if="show"/>
-    <Details v-if="show"/>
 
     <v-content class="mb-4" v-if="show">
       <router-view></router-view>
     </v-content>
-
+    <Details v-if="show"/>
     <v-content class="ma-0" v-if="!show">
       <router-view></router-view>
     </v-content>

@@ -10,13 +10,13 @@
   "relations": {
     "user": {
       "type": "belongsTo",
-        "idName": "id",
-        "polymorphic": {
-          "idType": "number",
-          "foreignKey": "userId",
-          "discriminator": "principalType"
-        }
+      "idName": "id",
+      "polymorphic": {
+        "idType": "number",
+        "foreignKey": "userId",
+        "discriminator": "principalType"
       }
+    }
   },
   "acls": [],
   "methods": {}

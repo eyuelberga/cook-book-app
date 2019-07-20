@@ -14,7 +14,7 @@
           <v-toolbar-title>Add a new Recipe</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="dialog = false">Save</v-btn>
+            <v-btn dark flat  @click="saveRecipe" >Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-stepper v-model="e1">
@@ -268,7 +268,7 @@ v-for="(s,index) in s_list" :key="s"
             <h3 class="title mb-0">{{recipe.name}}</h3>
             <v-spacer></v-spacer>
             <div>
-              <v-btn icon flat color="orange" @click="goToDetails(recipe.id)"><v-icon>detail</v-icon></v-btn>
+              <v-btn icon flat color="orange" @click="goToDetails(recipe.id)"><v-icon>launch</v-icon></v-btn>
               <v-btn icon flat color="green" @click="editRecipe(recipe.id)"><v-icon>edit</v-icon></v-btn>
           <v-btn icon flat color="red" @click="deleteRecipe(recipe.id)" ><v-icon>delete</v-icon></v-btn></div>
           </v-layout>
@@ -479,7 +479,9 @@ import { Promise } from 'q';
       this.name = ''
     },
     getAllRecipesByUser(){
-      axios.get('http://localhost:3000/api/Recipes/?access_token='+localStorage.getItem('access_token'),{where:{ownerId:localStorage.getItem('user_id')}})
+      let filter = {where:{ownerId:localStorage.getItem('user_id')}};
+      let filterString = JSON.stringify(filter);
+      axios.get('http://localhost:3000/api/Recipes/?access_token='+localStorage.getItem('access_token')+'&filter='+filterString)
            .then(res=>{
              let arr = [];
              arr = res.data;

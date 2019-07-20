@@ -59,7 +59,8 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": [
-        "updateAttributes","upsert",
+        "updateAttributes",
+        "upsert",
         "deleteById"
       ]
     },
